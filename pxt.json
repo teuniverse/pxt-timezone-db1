@@ -1,11 +1,10 @@
 {
   "name": "pxt-timezone-db",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MakeCode extension for timezone db stored on w25q128 spi flash memory",
   "license": "MIT",
   "dependencies": {
-    "core": "*",
-    "pxt-timezone-db": "github:teuniverse/pxt-timezone-db"
+    "core": "*"
   },
   "files": ["main.ts", "README.md"],
   "testFiles": [],

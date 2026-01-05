@@ -603,18 +603,4 @@ namespace timezoneDB {
     printDateTime("Time in tz: ", timezoneTime);
     printDateTime("Time in tz with dst: ", timezoneTimeDst);
   }
-
-  /**
-   */
-  //% block
-  export function timeOffsetToHourMinutes(offset: number): string {
-    let sign = offset >= 0.0 ? 1.0 : -1.0;
-    let minutes = Math.idiv(Math.abs(offset) * 60, 1);
-    return (
-      (sign < 0.0 ? "-" : "") +
-      (minutes / 60).toString() +
-      "." +
-      (minutes % 60).toString()
-    );
-  }
 }

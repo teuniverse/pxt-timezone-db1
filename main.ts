@@ -405,10 +405,7 @@ namespace timezoneDB {
     readCurrentTimezone();
   }
 
-  /**
-   */
-  //% block="readTimezone lat $lat|lon $lon"
-  export function readTimezone(lat: number, lon: number): void {
+  function getTimezoneInfo(lat: number, lon: number): TimezoneInfo {
     let latRoundToRes = Math.round(lat / resLat) * resLat;
     let lonRoundToRes = Math.round(lon / resLon) * resLon;
     let latIndex = Math.idiv((latRoundToRes + 90) / resLat, 1);
@@ -442,13 +439,28 @@ namespace timezoneDB {
       }
     }
 
-    latitude = lat;
-    longitude = lon;
-    timezoneInfo = {
+    return {
       utcOffset: utcOffset,
       hasDst: hasDst,
       dstDiff: dstDiff,
     };
+  }
+
+  /**
+   */
+  //% block="readTimezone lat $lat|lon $lon"
+  export function readTimezone(lat: number, lon: number): void {
+    latitude = lat;
+    longitude = lon;
+    timezoneInfo = getTimezoneInfo(latitude, longitude);
+  }
+
+  /**
+   */
+  //% block="readTimezone lat $lat|lon $lon"
+  export function getUtcDstOffset(lat: number, lon: number): number[] {
+    let info = getTimezoneInfo(lat, lon);
+    return [info.utcOffset, info.dstDiff];
   }
 
   /**
@@ -590,5 +602,19 @@ namespace timezoneDB {
     printDateTime("Time in utc: ", { year, month, day, hour, minute, second });
     printDateTime("Time in tz: ", timezoneTime);
     printDateTime("Time in tz with dst: ", timezoneTimeDst);
+  }
+
+  /**
+   */
+  //% block
+  export function timeOffsetToHourMinutes(offset: number): string {
+    let sign = offset >= 0.0 ? 1.0 : -1.0;
+    let minutes = Math.idiv(Math.abs(offset) * 60, 1);
+    return (
+      (sign < 0.0 ? "-" : "") +
+      (minutes / 60).toString() +
+      "." +
+      (minutes % 60).toString()
+    );
   }
 }

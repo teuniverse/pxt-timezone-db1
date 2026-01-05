@@ -457,7 +457,7 @@ namespace timezoneDB {
 
   /**
    */
-  //% block="readTimezone lat $lat|lon $lon"
+  //% block="getUtcDstOffset lat $lat|lon $lon"
   export function getUtcDstOffset(lat: number, lon: number): number[] {
     let info = getTimezoneInfo(lat, lon);
     return [info.utcOffset, info.dstDiff];
